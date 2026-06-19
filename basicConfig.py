@@ -16,6 +16,6 @@ X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, stratify=y, random_state=42
 )
 
-smote = SMOTE()
+smote = SMOTE(k_neighbors=5, sampling_strategy='minority')
 
 X_train, y_train = smote.fit_resample(X_train,y_train)

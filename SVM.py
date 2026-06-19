@@ -7,6 +7,10 @@ from sklearn.model_selection import train_test_split
 
 from basicConfig import X_train, y_train, X_test, y_test
 
+import time
+
+start_time = time.perf_counter()
+
 print(f"Formato X_train = {X_train.shape}")
 print(f"Formato y_train = {y_train.shape}")
 
@@ -21,9 +25,16 @@ print()
 
 pipe = Pipeline([('scaler', StandardScaler()), ('svc', SVC(kernel='rbf',class_weight='balanced'))])
 result = pipe.fit(X_train, y_train).score(X_test, y_test)
-print(f"Resultado da aplicação de Support Vector Machine (rbf): {result:.2%}")
 y_pred = pipe.predict(X_test)
+
+end_time = time.perf_counter()
+
+print(f"Resultado da aplicação de Support Vector Machine (rbf): {result:.2%}")
 print(f"Classification report: {classification_report(y_test, y_pred)}")
 disp = ConfusionMatrixDisplay(confusion_matrix(y_test, y_pred))
 disp.plot()
 plt.show()
+
+# Calculate and print execution time
+execution_time = end_time - start_time
+print(f"Execution time: {execution_time:.6f} seconds")
